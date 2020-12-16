@@ -32,7 +32,8 @@ module.exports = settings => {
       'SSO_NAME': phases[phase].ssoName,
       'KEYCLOAK_REALM': 'rzh2zkjq',
       'DJANGO_DEBUG': phases[phase].djangoDebug,
-      'OCP_NAME': phases[phase].ocpName
+      'OCP_NAME': phases[phase].ocpName,
+      'LOGOUT_HOST': phases[phase].logoutHost
     }
   }))
 
@@ -56,7 +57,7 @@ module.exports = settings => {
   objects = objects.concat(oc.processDeploymentTemplate(`${templatesLocalBaseUrl}/templates/patroni/deployment-prereq.yaml`, {
     'param': {
       'NAME': 'patroni',
-      'SUFFIX': phases[phase].suffix
+      'SUFFIX': phases[phase].suffix    
     }
   }))
   //deploy Patroni
@@ -117,7 +118,8 @@ module.exports = settings => {
   objects = objects.concat(oc.processDeploymentTemplate(`${templatesLocalBaseUrl}/templates/frontend/frontend-configmap.yaml`, {
     'param': {
       'NAME': phases[phase].name,
-      'SUFFIX': phases[phase].suffix
+      'SUFFIX': phases[phase].suffix,
+      'CREDIT_TRANSFER_ENABLED': phases[phase].creditTransferEnabled
     }
   }))
 
